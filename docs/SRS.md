@@ -1,5 +1,6 @@
 **CitySphere - Software Requirements Specification (SRS)**
 **1. Introduction**
+
 *1.1 Purpose*
 
 CitySphere is a vendor-centric local marketplace and city guide application. Its purpose is to connect newcomers and residents with local vendors, artisans, bookstores, and service providers in their city.
