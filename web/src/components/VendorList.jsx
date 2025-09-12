@@ -1,3 +1,4 @@
+// src/components/VendorList.jsx
 import React, { useEffect, useState } from "react";
 import { getVendors, deleteVendor } from "../api/vendors";
 import VendorForm from "./VendorForm";
@@ -22,7 +23,8 @@ export default function VendorList() {
       const data = await getVendors();
       setVendors(data);
     } catch (e) {
-      setError("Failed to load vendors");
+      console.error(e);
+      setError("❌ Failed to load vendors. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -33,9 +35,10 @@ export default function VendorList() {
     try {
       await deleteVendor(id);
       setVendors((prev) => prev.filter((v) => v._id !== id));
-      alert("Deleted");
+      alert("✅ Deleted successfully");
     } catch (e) {
-      alert("Delete failed");
+      console.error(e);
+      alert(`❌ Delete failed: ${e.response?.data?.error || e.message}`);
     }
   };
 
@@ -53,7 +56,6 @@ export default function VendorList() {
     setEditing(null);
   };
 
-  // ✅ Filter vendors by slug category + search query
   const visibleVendors = vendors.filter(
     (v) =>
       (!categoryFilter || v.category === categoryFilter) &&
@@ -86,7 +88,6 @@ export default function VendorList() {
         />
       )}
 
-      {/* Search + Category filter */}
       <div style={{ margin: "12px 0" }}>
         <input
           placeholder="Search by name/address"
@@ -119,11 +120,16 @@ export default function VendorList() {
               <div>
                 <strong>{v.name}</strong> — {v.category}
               </div>
-              <div>{v.address}</div>
+              <div>
+                {v.address}
+                {v.city ? `, ${v.city}` : ""}
+                {v.state ? `, ${v.state}` : ""}
+                {v.pincode ? ` - ${v.pincode}` : ""}
+              </div>
               <div style={{ marginTop: 6 }}>
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                    v.address
+                    `${v.address}, ${v.city || ""}, ${v.state || ""} ${v.pincode || ""}`
                   )}`}
                   target="_blank"
                   rel="noreferrer"
