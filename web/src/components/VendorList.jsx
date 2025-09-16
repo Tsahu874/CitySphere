@@ -1,7 +1,20 @@
+// src/components/VendorList.jsx
 import React, { useEffect, useState } from "react";
 import { getVendors, deleteVendor } from "../api/vendors";
 import VendorForm from "./VendorForm";
-import { toast } from "react-toastify";
+
+/*
+  Note (future): to restore embedded Google Maps later:
+  1) re-add: import MapView from "./MapView";
+  2) replace the "Open in Google Maps" <a> link below with:
+     {v.lat && v.lng ? (
+       <MapView lat={v.lat} lng={v.lng} />
+     ) : (
+       <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+         `${v.address}, ${v.city || ""}, ${v.state || ""} ${v.pincode || ""}`
+       )}`} target="_blank" rel="noreferrer">Open in Google Maps</a>
+     )}
+*/
 
 export default function VendorList() {
   const [vendors, setVendors] = useState([]);
@@ -25,7 +38,6 @@ export default function VendorList() {
     } catch (e) {
       console.error(e);
       setError("❌ Failed to load vendors. Please try again.");
-      toast.error("❌ Failed to load vendors.");
     } finally {
       setLoading(false);
     }
@@ -36,10 +48,10 @@ export default function VendorList() {
     try {
       await deleteVendor(id);
       setVendors((prev) => prev.filter((v) => v._id !== id));
-      toast.success("✅ Vendor deleted successfully");
+      alert("✅ Vendor deleted successfully");
     } catch (e) {
       console.error(e);
-      toast.error(`❌ Delete failed: ${e.response?.data?.error || e.message}`);
+      alert(`❌ Delete failed: ${e.response?.data?.error || e.message}`);
     }
   };
 
@@ -55,10 +67,9 @@ export default function VendorList() {
     });
     setShowForm(false);
     setEditing(null);
-    toast.success("✅ Vendor saved successfully");
   };
 
-  // filter visible vendors
+  // filter vendors
   const visibleVendors = vendors.filter(
     (v) =>
       (!categoryFilter || v.category.toLowerCase() === categoryFilter) &&
@@ -68,7 +79,6 @@ export default function VendorList() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      {/* Header */}
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Local Vendors</h2>
 
       {/* Add button */}
@@ -116,9 +126,7 @@ export default function VendorList() {
 
       {/* Loading + Error + List */}
       {loading ? (
-        <div className="flex justify-center items-center py-6">
-          <p className="text-gray-500 animate-pulse">Loading vendors...</p>
-        </div>
+        <p className="text-gray-500">Loading vendors...</p>
       ) : error ? (
         <p className="text-red-500">{error}</p>
       ) : visibleVendors.length === 0 ? (
@@ -139,25 +147,25 @@ export default function VendorList() {
                 {v.state ? `, ${v.state}` : ""}
                 {v.pincode ? ` - ${v.pincode}` : ""}
               </div>
-              <div className="flex gap-3 text-sm">
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                    `${v.address}, ${v.city || ""}, ${v.state || ""} ${
-                      v.pincode || ""
-                    }`
-                  )}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-blue-600 hover:underline"
-                >
-                  Map
-                </a>
+
+              {/* Always show free Google Maps link (no API key needed) */}
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                  `${v.address}, ${v.city || ""}, ${v.state || ""} ${
+                    v.pincode || ""
+                  }`
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                Open in Google Maps
+              </a>
+
+              <div className="flex gap-3 text-sm mt-2">
                 {v.phone && (
                   <a
-                    href={`https://wa.me/${v.phone.replace(
-                      /[^0-9]/g,
-                      ""
-                    )}?text=${encodeURIComponent(
+                    href={`https://wa.me/${v.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
                       "Hi, I saw your profile on CitySphere. I want to order..."
                     )}`}
                     target="_blank"

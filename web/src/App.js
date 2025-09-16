@@ -2,6 +2,7 @@ import React from "react";
 import VendorList from "./components/VendorList";
 import Header from "./components/Header";
 import About from "./pages/About";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // import toastify CSS + container

@@ -1,3 +1,4 @@
+// src/components/VendorForm.jsx
 import React, { useState, useEffect } from "react";
 import { addVendor, updateVendor } from "../api/vendors";
 
@@ -10,10 +11,12 @@ export default function VendorForm({ vendor, onSaved, onCancel }) {
     state: "",
     pincode: "",
     phone: "",
+    //lat: "",
+    //lng: "",
   });
   const [saving, setSaving] = useState(false);
 
-  // Load vendor data if editing
+  // Load existing vendor data when editing
   useEffect(() => {
     if (vendor) {
       setFormData({
@@ -24,16 +27,8 @@ export default function VendorForm({ vendor, onSaved, onCancel }) {
         state: vendor.state || "",
         pincode: vendor.pincode || "",
         phone: vendor.phone || "",
-      });
-    } else {
-      setFormData({
-        name: "",
-        category: "",
-        address: "",
-        city: "",
-        state: "",
-        pincode: "",
-        phone: "",
+        lat: vendor.lat || "",
+        lng: vendor.lng || "",
       });
     }
   }, [vendor]);
@@ -45,10 +40,6 @@ export default function VendorForm({ vendor, onSaved, onCancel }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.category || !formData.address) {
-      alert("⚠️ Name, Category, and Address are required!");
-      return;
-    }
     try {
       setSaving(true);
       let saved;
@@ -57,7 +48,6 @@ export default function VendorForm({ vendor, onSaved, onCancel }) {
       } else {
         saved = await addVendor(formData);
       }
-      alert("✅ Vendor saved successfully!");
       onSaved(saved);
     } catch (err) {
       console.error(err);
@@ -68,85 +58,90 @@ export default function VendorForm({ vendor, onSaved, onCancel }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white shadow-md rounded p-6 mb-6 border border-gray-200"
-    >
-      <h3 className="text-lg font-semibold mb-4 text-gray-700">
-        {vendor ? "Edit Vendor" : "Add Vendor"}
-      </h3>
+    <form onSubmit={handleSubmit} className="space-y-3 mb-4 p-4 border rounded bg-gray-50">
+      <input
+        name="name"
+        placeholder="Name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+        className="border px-3 py-2 rounded w-full"
+      />
+      <input
+        name="category"
+        placeholder="Category (e.g. Bakers)"
+        value={formData.category}
+        onChange={handleChange}
+        className="border px-3 py-2 rounded w-full"
+      />
+      <input
+        name="address"
+        placeholder="Address"
+        value={formData.address}
+        onChange={handleChange}
+        className="border px-3 py-2 rounded w-full"
+      />
+      <input
+        name="city"
+        placeholder="City"
+        value={formData.city}
+        onChange={handleChange}
+        className="border px-3 py-2 rounded w-full"
+      />
+      <input
+        name="state"
+        placeholder="State"
+        value={formData.state}
+        onChange={handleChange}
+        className="border px-3 py-2 rounded w-full"
+      />
+      <input
+        name="pincode"
+        placeholder="Pincode"
+        value={formData.pincode}
+        onChange={handleChange}
+        className="border px-3 py-2 rounded w-full"
+      />
+      <input
+        name="phone"
+        placeholder="Phone"
+        value={formData.phone}
+        onChange={handleChange}
+        className="border px-3 py-2 rounded w-full"
+      />
+      {/* <div className="flex gap-2">
+        <input
+          name="lat"
+          placeholder="Latitude (optional)"
+          value={formData.lat}
+          onChange={handleChange}
+          className="border px-3 py-2 rounded w-1/2"
+        />
+        <input
+          name="lng"
+          placeholder="Longitude (optional)"
+          value={formData.lng}
+          onChange={handleChange}
+          className="border px-3 py-2 rounded w-1/2"
+        />
+      </div> */}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          name="name"
-          placeholder="Shop name"
-          value={formData.name}
-          onChange={handleChange}
-          className="border px-3 py-2 rounded focus:ring focus:ring-blue-300"
-          required
-        />
-        <input
-          name="category"
-          placeholder="Category (e.g. Bakers)"
-          value={formData.category}
-          onChange={handleChange}
-          className="border px-3 py-2 rounded focus:ring focus:ring-blue-300"
-          required
-        />
-        <input
-          name="address"
-          placeholder="Address"
-          value={formData.address}
-          onChange={handleChange}
-          className="border px-3 py-2 rounded focus:ring focus:ring-blue-300 col-span-2"
-          required
-        />
-        <input
-          name="city"
-          placeholder="City"
-          value={formData.city}
-          onChange={handleChange}
-          className="border px-3 py-2 rounded focus:ring focus:ring-blue-300"
-        />
-        <input
-          name="state"
-          placeholder="State"
-          value={formData.state}
-          onChange={handleChange}
-          className="border px-3 py-2 rounded focus:ring focus:ring-blue-300"
-        />
-        <input
-          name="pincode"
-          placeholder="Pincode"
-          value={formData.pincode}
-          onChange={handleChange}
-          className="border px-3 py-2 rounded focus:ring focus:ring-blue-300"
-        />
-        <input
-          name="phone"
-          placeholder="Phone (digits only)"
-          value={formData.phone}
-          onChange={handleChange}
-          className="border px-3 py-2 rounded focus:ring focus:ring-blue-300"
-        />
-      </div>
-
-      <div className="mt-4 flex gap-2">
+      <div className="flex gap-2">
         <button
           type="submit"
           disabled={saving}
-          className={`px-4 py-2 rounded text-white ${
+          className={`px-4 py-2 rounded ${
             saving
               ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
-          } transition`}
+              : "bg-blue-600 hover:bg-blue-700 text-white"
+          }`}
         >
           {saving ? "Saving..." : "Save"}
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 transition"
+          className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400"
         >
           Cancel
         </button>
