@@ -53,6 +53,8 @@ app.put('/vendors/:id', async (req, res) => {
     vendor.state = req.body.state || vendor.state;
     vendor.pincode = req.body.pincode || vendor.pincode;
     vendor.phone = req.body.phone !== undefined ? req.body.phone : vendor.phone;
+    vendor.email = req.body.email !== undefined ? req.body.email : vendor.email;
+
 
     // ✅ Lat/Lng support
     vendor.lat = req.body.lat !== undefined ? req.body.lat : vendor.lat;

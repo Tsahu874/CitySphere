@@ -11,12 +11,11 @@ export default function VendorForm({ vendor, onSaved, onCancel }) {
     state: "",
     pincode: "",
     phone: "",
-    //lat: "",
-    //lng: "",
+    email: "", // ✅ new field
   });
   const [saving, setSaving] = useState(false);
 
-  // Load existing vendor data when editing
+  // Load vendor data if editing, otherwise reset for new vendor
   useEffect(() => {
     if (vendor) {
       setFormData({
@@ -27,8 +26,18 @@ export default function VendorForm({ vendor, onSaved, onCancel }) {
         state: vendor.state || "",
         pincode: vendor.pincode || "",
         phone: vendor.phone || "",
-        lat: vendor.lat || "",
-        lng: vendor.lng || "",
+        email: vendor.email || "",
+      });
+    } else {
+      setFormData({
+        name: "",
+        category: "",
+        address: "",
+        city: "",
+        state: "",
+        pincode: "",
+        phone: "",
+        email: "", // ✅ reset email when adding new vendor
       });
     }
   }, [vendor]);
@@ -58,7 +67,10 @@ export default function VendorForm({ vendor, onSaved, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 mb-4 p-4 border rounded bg-gray-50">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-3 mb-4 p-4 border rounded bg-gray-50"
+    >
       <input
         name="name"
         placeholder="Name"
@@ -109,22 +121,14 @@ export default function VendorForm({ vendor, onSaved, onCancel }) {
         onChange={handleChange}
         className="border px-3 py-2 rounded w-full"
       />
-      {/* <div className="flex gap-2">
-        <input
-          name="lat"
-          placeholder="Latitude (optional)"
-          value={formData.lat}
-          onChange={handleChange}
-          className="border px-3 py-2 rounded w-1/2"
-        />
-        <input
-          name="lng"
-          placeholder="Longitude (optional)"
-          value={formData.lng}
-          onChange={handleChange}
-          className="border px-3 py-2 rounded w-1/2"
-        />
-      </div> */}
+      <input
+        name="email"
+        placeholder="Email"
+        type="email"
+        value={formData.email}
+        onChange={handleChange}
+        className="border px-3 py-2 rounded w-full"
+      />
 
       <div className="flex gap-2">
         <button

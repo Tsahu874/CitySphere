@@ -3,19 +3,6 @@ import React, { useEffect, useState } from "react";
 import { getVendors, deleteVendor } from "../api/vendors";
 import VendorForm from "./VendorForm";
 
-/*
-  Note (future): to restore embedded Google Maps later:
-  1) re-add: import MapView from "./MapView";
-  2) replace the "Open in Google Maps" <a> link below with:
-     {v.lat && v.lng ? (
-       <MapView lat={v.lat} lng={v.lng} />
-     ) : (
-       <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-         `${v.address}, ${v.city || ""}, ${v.state || ""} ${v.pincode || ""}`
-       )}`} target="_blank" rel="noreferrer">Open in Google Maps</a>
-     )}
-*/
-
 export default function VendorList() {
   const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -148,45 +135,61 @@ export default function VendorList() {
                 {v.pincode ? ` - ${v.pincode}` : ""}
               </div>
 
-              {/* Always show free Google Maps link (no API key needed) */}
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                  `${v.address}, ${v.city || ""}, ${v.state || ""} ${
-                    v.pincode || ""
-                  }`
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 hover:underline"
-              >
-                Open in Google Maps
-              </a>
-
-              <div className="flex gap-3 text-sm mt-2">
-                {v.phone && (
+              {/* Contact Buttons */}
+              {/* Contact + actions (styled) */}
+              <div className="flex flex-wrap items-center gap-2 mt-2">
+                {/* WhatsApp */}
+                {v.phone ? (
                   <a
-                    href={`https://wa.me/${v.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+                    href={`https://wa.me/${v.phone.replace(
+                      /[^0-9]/g,
+                      ""
+                    )}?text=${encodeURIComponent(
                       "Hi, I saw your profile on CitySphere. I want to order..."
                     )}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-green-600 hover:underline"
+                    className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition text-sm"
                   >
                     WhatsApp
                   </a>
+                ) : null}
+
+                {/* Email */}
+                {v.email ? (
+                  <a
+                    href={`mailto:${v.email}`}
+                    className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm"
+                  >
+                    Email
+                  </a>
+                ) : null}
+
+                {/* If neither phone nor email */}
+                {!v.phone && !v.email && (
+                  <span className="text-gray-500 text-sm mr-2">
+                    No contact info available
+                  </span>
                 )}
+
+                {/* Spacer */}
+                <div className="flex-1" />
+
+                {/* Edit */}
                 <button
                   onClick={() => {
                     setEditing(v);
                     setShowForm(true);
                   }}
-                  className="text-yellow-600 hover:underline"
+                  className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition text-sm"
                 >
                   Edit
                 </button>
+
+                {/* Delete */}
                 <button
                   onClick={() => handleDelete(v._id)}
-                  className="text-red-600 hover:underline"
+                  className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition text-sm"
                 >
                   Delete
                 </button>

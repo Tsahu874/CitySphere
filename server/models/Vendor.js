@@ -15,8 +15,9 @@ const VendorSchema = new mongoose.Schema({
   state: { type: String },
   pincode: { type: String },
   phone: { type: String },
-  lat: { type: Number },   
-  lng: { type: Number },   
+  email: { type: String },   
+  // lat: { type: Number },
+  // lng: { type: Number },
   reviews: { type: [ReviewSchema], default: [] },
   avgRating: { type: Number, default: 0 }
 }, { timestamps: true });
