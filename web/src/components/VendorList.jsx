@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { getVendors, deleteVendor } from "../api/vendors";
 import VendorForm from "./VendorForm";
+import ProductList from "./ProductList";   // ✅ Import ProductList
 
 export default function VendorList() {
   const [vendors, setVendors] = useState([]);
@@ -12,6 +13,8 @@ export default function VendorList() {
 
   const [query, setQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
+
+  const [showProductsFor, setShowProductsFor] = useState(null); // ✅ Track vendor for products
 
   useEffect(() => {
     fetchVendors();
@@ -136,8 +139,7 @@ export default function VendorList() {
               </div>
 
               {/* Contact Buttons */}
-              {/* Contact + actions (styled) */}
-              <div className="flex flex-wrap items-center gap-2 mt-2">
+              <div className="flex gap-3 text-sm mt-2">
                 {/* WhatsApp */}
                 {v.phone ? (
                   <a
@@ -149,53 +151,65 @@ export default function VendorList() {
                     )}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition text-sm"
+                    className="text-green-600 hover:underline"
                   >
                     WhatsApp
                   </a>
-                ) : null}
+                ) : (
+                  <span className="text-gray-400">No phone</span>
+                )}
 
                 {/* Email */}
                 {v.email ? (
                   <a
                     href={`mailto:${v.email}`}
-                    className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm"
+                    className="text-blue-600 hover:underline"
                   >
                     Email
                   </a>
-                ) : null}
-
-                {/* If neither phone nor email */}
-                {!v.phone && !v.email && (
-                  <span className="text-gray-500 text-sm mr-2">
-                    No contact info available
-                  </span>
+                ) : (
+                  <span className="text-gray-400">No email</span>
                 )}
 
-                {/* Spacer */}
-                <div className="flex-1" />
-
-                {/* Edit */}
+                {/* Edit + Delete */}
                 <button
                   onClick={() => {
                     setEditing(v);
                     setShowForm(true);
                   }}
-                  className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition text-sm"
+                  className="text-yellow-600 hover:underline"
                 >
                   Edit
                 </button>
-
-                {/* Delete */}
                 <button
                   onClick={() => handleDelete(v._id)}
-                  className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition text-sm"
+                  className="text-red-600 hover:underline"
                 >
                   Delete
+                </button>
+                {/* ✅ Manage Products */}
+                <button
+                  onClick={() => setShowProductsFor(v._id)}
+                  className="text-blue-600 hover:underline"
+                >
+                  Manage Products
                 </button>
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* ✅ Product List Section */}
+      {showProductsFor && (
+        <div className="mt-6">
+          <h3 className="text-lg font-bold text-gray-700 mb-2">
+            Products for {vendors.find(v => v._id === showProductsFor)?.name}
+          </h3>
+          <ProductList
+            vendorId={showProductsFor}
+            onClose={() => setShowProductsFor(null)}
+          />
         </div>
       )}
     </div>

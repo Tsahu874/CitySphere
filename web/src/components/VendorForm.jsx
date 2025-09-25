@@ -37,7 +37,7 @@ export default function VendorForm({ vendor, onSaved, onCancel }) {
         state: "",
         pincode: "",
         phone: "",
-        email: "", // ✅ reset email when adding new vendor
+        email: "", 
       });
     }
   }, [vendor]);
