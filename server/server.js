@@ -2,6 +2,11 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const authRoutes = require("./routes/authRoutes");
+const vendorRoutes = require("./routes/vendorRoutes");
+
+
+
 
 const app = express();
 const PORT = 5000;
@@ -11,6 +16,9 @@ const PORT = 5000;
 // =========================
 app.use(cors());
 app.use(express.json());
+app.use("/auth", authRoutes);
+app.use("/api", vendorRoutes);
+
 
 // =========================
 // Connect to MongoDB
