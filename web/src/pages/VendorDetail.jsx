@@ -1,5 +1,6 @@
-// web/src/pages/VendorDetail.jsx
+// ✅ web/src/pages/VendorDetail.jsx
 // Shows vendor info + their products (user view, read-only)
+
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getVendor } from "../api/vendors";
@@ -16,11 +17,9 @@ export default function VendorDetail() {
     async function fetchData() {
       try {
         setLoading(true);
-        // fetch vendor details
         const vendorData = await getVendor(id);
-        setVendor(vendorData);
-        // fetch products for vendor
         const productData = await getProducts(id);
+        setVendor(vendorData);
         setProducts(productData);
       } catch (err) {
         console.error(err);
@@ -32,24 +31,45 @@ export default function VendorDetail() {
     fetchData();
   }, [id]);
 
-  if (loading) return <p className="text-gray-500">Loading...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
-  if (!vendor) return <p className="text-gray-500">Vendor not found</p>;
+  if (loading)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-silver to-secondary">
+        <p className="text-gray-600 animate-pulse">Loading vendor details...</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-secondary">
+        <p className="text-red-600">{error}</p>
+      </div>
+    );
+
+  if (!vendor)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-secondary">
+        <p className="text-gray-500">Vendor not found</p>
+      </div>
+    );
 
   return (
-    <div>
-      <Link to="/" className="text-blue-600 hover:underline mb-4 inline-block">
+    <div className="min-h-screen bg-gradient-to-br from-silver via-white to-secondary py-10 px-4">
+      <Link to="/home" className="text-primary hover:underline mb-4 inline-block font-medium">
         ← Back to Vendors
       </Link>
 
-      <div className="bg-white p-6 rounded shadow mb-6">
-        <h2 className="text-2xl font-bold">{vendor.name}</h2>
+      {/* 🏪 Vendor Info Card */}
+      <div className="bg-white rounded-2xl shadow-lg p-6 border border-silver mb-8">
+        <h2 className="text-3xl font-bold text-primary">{vendor.name}</h2>
         <p className="text-gray-600 capitalize">{vendor.category}</p>
         <p className="text-gray-500">
-          {vendor.address}{vendor.city ? `, ${vendor.city}` : ""}{vendor.state ? `, ${vendor.state}` : ""}{vendor.pincode ? ` - ${vendor.pincode}` : ""}
+          {vendor.address}
+          {vendor.city ? `, ${vendor.city}` : ""}
+          {vendor.state ? `, ${vendor.state}` : ""}
+          {vendor.pincode ? ` - ${vendor.pincode}` : ""}
         </p>
 
-        <div className="flex gap-4 mt-3 text-sm">
+        <div className="flex flex-wrap gap-6 mt-4 text-sm">
           {vendor.phone && (
             <a
               href={`https://wa.me/${vendor.phone.replace(/\D/g, "")}`}
@@ -78,16 +98,24 @@ export default function VendorDetail() {
         </div>
       </div>
 
-      <h3 className="text-xl font-semibold mb-4">Products</h3>
+      {/* 🛍️ Product Grid */}
+      <h3 className="text-2xl font-semibold text-primary mb-4">Products</h3>
       {products.length === 0 ? (
         <p className="text-gray-500">No products available.</p>
       ) : (
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((p) => (
-            <div key={p._id} className="border p-4 rounded bg-white">
-              <h4 className="font-semibold">{p.name}</h4>
-              <p className="text-sm text-gray-600">{p.description || "No description"}</p>
-              <p className="text-sm font-medium text-gray-800 mt-1">₹{p.price} — {p.category}</p>
+            <div
+              key={p._id}
+              className="bg-white border border-silver rounded-xl p-5 shadow hover:shadow-lg transition"
+            >
+              <h4 className="text-lg font-bold text-gray-800">{p.name}</h4>
+              <p className="text-sm text-gray-600 mt-1">
+                {p.description || "No description provided."}
+              </p>
+              <p className="text-sm text-primary font-medium mt-2">
+                ₹{p.price} — {p.category}
+              </p>
             </div>
           ))}
         </div>

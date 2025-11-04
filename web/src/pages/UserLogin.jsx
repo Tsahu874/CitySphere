@@ -46,10 +46,10 @@ export default function UserLogin() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-50 to-purple-100">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-silver to-secondary">
       {/* 🧭 Card */}
-      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">User Login</h2>
+      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md border border-silver">
+        <h2 className="text-3xl font-bold text-center text-primary mb-6">User Login</h2>
 
         {/* 🧾 Login Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -59,7 +59,7 @@ export default function UserLogin() {
             placeholder="Enter your email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             required
           />
 
@@ -69,13 +69,13 @@ export default function UserLogin() {
             placeholder="Enter your password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             required
           />
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all"
+            className="w-full bg-primary text-white py-2 rounded-lg font-semibold hover:bg-gold transition-all"
           >
             Login
           </button>
@@ -85,7 +85,7 @@ export default function UserLogin() {
         <p className="text-center text-sm text-gray-600 mt-4">
           Don’t have an account?{" "}
           <span
-            className="text-blue-600 hover:underline cursor-pointer"
+            className="text-primary hover:underline cursor-pointer"
             onClick={() => navigate("/user/signup")}
           >
             Sign up here
