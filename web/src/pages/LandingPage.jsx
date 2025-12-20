@@ -1,32 +1,36 @@
-// 📂 File: web/src/pages/LandingPage.jsx
-// 🎯 Purpose: Stylish entry screen with luxury-modern palette
+// web/src/pages/LandingPage.jsx
+
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import cityBg from "../assets/city-bg.jpg";
+import cityBg from "../assets/city-bg.jpg"; // Local city background image
 
 export default function LandingPage() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //Used to redirect on button click
 
   return (
+    //  Full-page flex layout with luxury-themed gradient
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-silver via-secondary to-white overflow-hidden">
       
-      {/* 🌆 Background image */}
+      {/*  Background image layer (semi-transparent) */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-50"
         style={{ backgroundImage: `url(${cityBg})` }}
       ></div>
 
-      {/* 🎯 Hero content */}
+      {/*  Foreground content (z-index above background) */}
       <div className="relative z-10 text-center p-6">
+        {/* 🏷️ App Heading */}
         <h1 className="text-5xl font-extrabold text-primary mb-4 drop-shadow">
           🌆 CitySphere
         </h1>
 
+        {/* Tagline Text */}
         <p className="text-lg text-blue mb-8 max-w-xl mx-auto">
           Discover and support local vendors, artisans, and small businesses — all in one place.
         </p>
 
+        {/*  Action Buttons: User & Vendor login */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={() => navigate("/user/login")}
@@ -43,11 +47,6 @@ export default function LandingPage() {
           </button>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="absolute bottom-4 text-blue text-sm">
-        © 2025 <span className="font-semibold text-gold">CitySphere</span> — Empowering local markets.
-      </footer>
     </div>
   );
 }

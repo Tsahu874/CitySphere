@@ -1,20 +1,28 @@
+// ✅ web/src/pages/About.jsx
+// ℹ️ Static About page explaining the purpose and mission of CitySphere
+
 import React from "react";
 
 export default function About() {
   return (
-    <section id="about" className="bg-white shadow p-6 rounded border border-gray-200">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">About CitySphere</h2>
-      <p className="text-gray-700 leading-relaxed">
-        CitySphere is a local marketplace and city guide designed to connect 
-        people with local vendors, artisans, bakers, and bookstores in their 
-        community. 🌍 
+    <section className="bg-white shadow-lg rounded-xl p-8 border border-silver max-w-4xl mx-auto mt-10">
+      <h2 className="text-3xl font-bold text-charcoal mb-4 text-center">
+        About CitySphere
+      </h2>
+
+      <p className="text-gray-700 leading-relaxed text-justify">
+        <span className="font-semibold text-primary">CitySphere</span> is your
+        go-to local marketplace and city guide — designed to connect people
+        with neighborhood vendors, artisans, bakers, and bookstores. 🌍 Whether
+        you're looking to support a small bakery or discover a hidden bookstore
+        gem, CitySphere brings the best of your community to your fingertips.
       </p>
-      <p className="text-gray-700 leading-relaxed mt-2">
-        Our goal is to promote small businesses and make it easier for you 
-        to discover unique shops, order directly, and support local talent. 
-        With features like maps, WhatsApp chat, and vendor reviews, 
-        CitySphere helps strengthen the connection between communities 
-        and local entrepreneurs.
+
+      <p className="text-gray-700 leading-relaxed mt-4 text-justify">
+        Our mission is simple: <span className="font-semibold text-gold">Empower small businesses</span> and strengthen local economies by promoting
+        direct engagement between users and vendors. Enjoy features like
+        real-time WhatsApp chat, integrated maps, and vendor showcases —
+        making it easier than ever to discover, connect, and support.
       </p>
     </section>
   );

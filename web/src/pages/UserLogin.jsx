@@ -1,97 +1,63 @@
-// ✅ web/src/pages/UserLogin.jsx
-// Handles User Login + Token Save + Redirect to Home Page
-
 import React, { useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function UserLogin() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // 🧩 State for input fields
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  // 🧩 Update state on typing
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // 🧩 Handle login submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // 🔹 Send login request to backend
-      const res = await axios.post("http://localhost:5000/auth/user/login", formData);
+      const res = await axios.post("http://localhost:5000/api/users/login", {
+        email,
+        password,
+      });
 
-      // ✅ Show success notification
-      toast.success("🎉 Login successful!");
+      const user = {
+        _id: res.data.user._id,
+        fullName: res.data.user.fullName || res.data.user.name || "User",
+        email: res.data.user.email,
+      };
 
-      // 🔹 Save token in localStorage
       localStorage.setItem("userToken", res.data.token);
-      localStorage.setItem("userName", res.data.user.fullName);
+      localStorage.setItem("userData", JSON.stringify(user));
 
-      // 🔹 Redirect user to home page
+      toast.success("Login successful");
       navigate("/home");
     } catch (err) {
-      // ❌ If any error
-      toast.error("Invalid email or password");
-      console.error("Login error:", err);
+      toast.error("User not found");
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-silver to-secondary">
-      {/* 🧭 Card */}
-      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md border border-silver">
-        <h2 className="text-3xl font-bold text-center text-primary mb-6">User Login</h2>
+    <div className="flex justify-center items-center min-h-screen">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow w-80">
+        <h2 className="text-xl font-bold mb-4">User Login</h2>
 
-        {/* 🧾 Login Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-            required
-          />
+        <input
+          type="email"
+          placeholder="Email"
+          className="border p-2 w-full mb-3"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-          <input
-            name="password"
-            type="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-            required
-          />
+        <input
+          type="password"
+          placeholder="Password"
+          className="border p-2 w-full mb-4"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-          <button
-            type="submit"
-            className="w-full bg-primary text-white py-2 rounded-lg font-semibold hover:bg-gold transition-all"
-          >
-            Login
-          </button>
-        </form>
-
-        {/* 🧭 Link to Signup */}
-        <p className="text-center text-sm text-gray-600 mt-4">
-          Don’t have an account?{" "}
-          <span
-            className="text-primary hover:underline cursor-pointer"
-            onClick={() => navigate("/user/signup")}
-          >
-            Sign up here
-          </span>
-        </p>
-      </div>
+        <button className="bg-blue-600 text-white w-full py-2 rounded">
+          Login
+        </button>
+      </form>
     </div>
   );
 }

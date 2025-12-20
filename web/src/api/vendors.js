@@ -1,10 +1,28 @@
-// web/src/api/vendors.js
-// Centralized vendor API calls (used everywhere in the frontend)
-import axios from 'axios';
-const API = 'http://localhost:5000'; // backend base URL
+// src/api/vendors.js
+import axios from "axios";
 
-export const getVendors = () => axios.get(`${API}/vendors`).then(r => r.data);
-export const getVendor = (id) => axios.get(`${API}/vendors/${id}`).then(r => r.data);
-export const addVendor = (vendor) => axios.post(`${API}/vendors`, vendor).then(r => r.data);
-export const updateVendor = (id, vendor) => axios.put(`${API}/vendors/${id}`, vendor).then(r => r.data);
-export const deleteVendor = (id) => axios.delete(`${API}/vendors/${id}`).then(r => r.data);
+const API_BASE = "http://localhost:5000";
+
+// ✅ GET all vendors
+export const getVendors = async () => {
+  const res = await axios.get(`${API_BASE}/api/vendors`);
+  return res.data;
+};
+
+// ✅ ADD vendor
+export const addVendor = async (vendor) => {
+  const res = await axios.post(`${API_BASE}/api/vendors`, vendor);
+  return res.data;
+};
+
+// ✅ UPDATE vendor
+export const updateVendor = async (id, vendor) => {
+  const res = await axios.put(`${API_BASE}/api/vendors/${id}`, vendor);
+  return res.data;
+};
+
+// ✅ DELETE vendor
+export const deleteVendor = async (id) => {
+  const res = await axios.delete(`${API_BASE}/api/vendors/${id}`);
+  return res.data;
+};

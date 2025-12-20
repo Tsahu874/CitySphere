@@ -1,17 +1,15 @@
-// 🌿 web/src/components/ProductList.jsx
 import React, { useEffect, useState } from "react";
-import { getProducts, deleteProduct } from "../api/products";
+import { getProductsByVendor, deleteProduct } from "../api/products";
 import ProductForm from "./ProductForm";
-import { toast } from "react-toastify";
+
+const IMAGE_BASE = "http://localhost:5000";
 
 export default function ProductList({ vendorId, onClose }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-  // ✅ Fetch products from DB
   useEffect(() => {
     fetchProducts();
   }, [vendorId]);
@@ -19,17 +17,22 @@ export default function ProductList({ vendorId, onClose }) {
   async function fetchProducts() {
     try {
       setLoading(true);
-      const data = await getProducts(vendorId);
+      const data = await getProductsByVendor(vendorId);
       setProducts(data);
     } catch (err) {
       console.error(err);
-      setError("❌ Failed to load products");
+      alert("❌ Failed to load products");
     } finally {
       setLoading(false);
     }
   }
 
-  // ✅ When product added/edited
+  const handleDelete = async (id) => {
+    if (!window.confirm("Delete this product?")) return;
+    await deleteProduct(id);
+    setProducts((prev) => prev.filter((p) => p._id !== id));
+  };
+
   const handleSaved = (savedProduct) => {
     setProducts((prev) => {
       const idx = prev.findIndex((p) => p._id === savedProduct._id);
@@ -40,111 +43,90 @@ export default function ProductList({ vendorId, onClose }) {
       }
       return [savedProduct, ...prev];
     });
-    toast.success("✅ Product saved successfully!");
     setShowForm(false);
     setEditing(null);
   };
 
-  // ✅ Handle delete
-  const handleDelete = async (id) => {
-    if (!window.confirm("Delete this product?")) return;
-    try {
-      await deleteProduct(id);
-      setProducts((prev) => prev.filter((p) => p._id !== id));
-      toast.info("🗑️ Product deleted");
-    } catch (err) {
-      console.error(err);
-      toast.error("❌ Delete failed");
-    }
-  };
-
   return (
-    <div className="bg-white shadow-md rounded-2xl p-6">
+    <div className="mt-6">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-2xl font-bold text-green-700">🛍️ Your Products</h3>
-        <button
-          onClick={() => {
-            setEditing(null);
-            setShowForm(true);
-          }}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
-        >
-          + Add Product
+        <h3 className="text-xl font-bold">My Products</h3>
+        <button onClick={onClose} className="text-gray-500 hover:underline">
+          Close
         </button>
       </div>
 
-      {/* Product Form Modal */}
+      <button
+        onClick={() => {
+          setEditing(null);
+          setShowForm(true);
+        }}
+        className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
+      >
+        + Add Product
+      </button>
+
       {showForm && (
-        <div className="mb-6 border rounded-lg bg-gray-50 p-4">
-          <ProductForm
-            vendorId={vendorId}
-            product={editing}
-            onSaved={handleSaved}
-            onCancel={() => {
-              setShowForm(false);
-              setEditing(null);
-            }}
-          />
-        </div>
+        <ProductForm
+          vendorId={vendorId}
+          product={editing}
+          onSaved={handleSaved}
+          onCancel={() => {
+            setShowForm(false);
+            setEditing(null);
+          }}
+        />
       )}
 
-      {/* Product Display */}
       {loading ? (
-        <p className="text-gray-500 text-center">Loading products...</p>
-      ) : error ? (
-        <p className="text-red-500 text-center">{error}</p>
+        <p>Loading products...</p>
       ) : products.length === 0 ? (
-        <p className="text-gray-500 text-center">No products added yet.</p>
+        <p>No products added yet.</p>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-4">
           {products.map((p) => (
             <div
               key={p._id}
-              className="border rounded-xl p-4 bg-gray-50 shadow-sm hover:shadow-md transition-all duration-200"
+              className="bg-white border rounded shadow-sm p-3"
             >
-              <div className="mb-3">
-                <h4 className="text-xl font-semibold text-gray-800">{p.name}</h4>
-                <p className="text-gray-600 text-sm">
-                  {p.description || "No description"}
-                </p>
-              </div>
-              <div className="flex justify-between items-center">
-                <p className="text-green-700 font-bold">₹{p.price}</p>
-                <span className="text-sm text-gray-500">{p.category}</span>
-              </div>
+              {/* 🖼 IMAGE */}
+              {p.image ? (
+                <img
+                  src={`${IMAGE_BASE}${p.image}`}
+                  alt={p.name}
+                  className="h-40 w-full object-cover rounded mb-2"
+                />
+              ) : (
+                <div className="h-40 flex items-center justify-center bg-gray-100 mb-2 rounded text-gray-400">
+                  No Image
+                </div>
+              )}
 
-              {/* Buttons */}
-              <div className="flex justify-end gap-3 mt-4">
+              <h4 className="font-semibold">{p.name}</h4>
+              <p className="text-sm text-gray-600">{p.category}</p>
+              <p className="text-green-600 font-bold">₹{p.price}</p>
+
+              <div className="flex gap-3 text-sm mt-2">
                 <button
                   onClick={() => {
                     setEditing(p);
                     setShowForm(true);
                   }}
-                  className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-md"
+                  className="text-yellow-600"
                 >
-                  ✏️ Edit
+                  Edit
                 </button>
                 <button
                   onClick={() => handleDelete(p._id)}
-                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"
+                  className="text-red-600"
                 >
-                  🗑️ Delete
+                  Delete
                 </button>
               </div>
             </div>
           ))}
         </div>
       )}
-
-      {/* Close Button */}
-      <div className="mt-6 text-center">
-        <button
-          onClick={onClose}
-          className="px-5 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg"
-        >
-          Close
-        </button>
-      </div>
     </div>
   );
 }

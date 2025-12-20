@@ -12,12 +12,15 @@ import VendorList from "./components/VendorList";
 import ProductList from "./components/ProductList";
 import VendorDashboard from "./pages/VendorDashboard";
 
-//  Import Protected Route
+// 🔐 Protected Route
 import ProtectedVendorRoute from "./components/ProtectedVendorRoute";
 
 // 👤 User Side Pages
 import UserHome from "./pages/UserHome";
+import UserProfile from "./pages/UserProfile";
 import VendorDetail from "./pages/VendorDetail";
+import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
 
 // 🔐 Authentication Pages
 import UserSignup from "./pages/UserSignup";
@@ -33,18 +36,25 @@ function App() {
   return (
     <Router>
       <div className="bg-gray-50 min-h-screen">
+        {/* 🔝 Navbar */}
         <Header />
+
+        {/* 📄 Page Content */}
         <main className="max-w-6xl mx-auto px-6 py-8">
           <Routes>
-            {/* 🏠 Landing Page */}
+            {/* 🏠 Landing */}
             <Route path="/" element={<LandingPage />} />
 
-            {/* 👤 USER ROUTES */}
+            {/* 👤 User */}
             <Route path="/home" element={<UserHome />} />
-            <Route path="/vendor/:id" element={<VendorDetail />} />
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/cart" element={<Cart />} />
 
-            {/* 🧑‍💼 VENDOR DASHBOARD ROUTES */}
-            {/*  Protected route using ProtectedVendorRoute */}
+            {/* 🏪 Vendor / Products */}
+            <Route path="/vendor/:id" element={<VendorDetail />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+
+            {/* 🧑‍💼 Vendor Dashboard */}
             <Route
               path="/vendor-dashboard"
               element={
@@ -54,19 +64,23 @@ function App() {
               }
             />
             <Route path="/vendor-dashboard/list" element={<VendorList />} />
-            <Route path="/vendor-dashboard/:id/products" element={<ProductList />} />
+            <Route
+              path="/vendor-dashboard/:id/products"
+              element={<ProductList />}
+            />
 
-            {/* 🔐 AUTH ROUTES */}
+            {/* 🔐 Auth */}
             <Route path="/user/signup" element={<UserSignup />} />
             <Route path="/user/login" element={<UserLogin />} />
             <Route path="/vendor/signup" element={<VendorSignup />} />
             <Route path="/vendor/login" element={<VendorLogin />} />
 
-            {/* ℹ️ About Page */}
+            {/* ℹ️ Info */}
             <Route path="/about" element={<About />} />
           </Routes>
         </main>
 
+        {/* 🔔 Toast */}
         <ToastContainer position="top-right" autoClose={3000} />
       </div>
     </Router>

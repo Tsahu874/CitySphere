@@ -1,39 +1,39 @@
-// src/api/products.js
-// Product API helper functions
-// These functions talk to the backend Express server
-// and are used in the frontend components (ProductForm, ProductList, VendorDetail, etc.)
-
 import axios from "axios";
 
-// Base URL of our backend server
-const API = "http://localhost:5000";
+const API_BASE = "http://localhost:5000/api/products";
 
-// =============================
-//  Product APIs
-// =============================
+// 📦 GET PRODUCTS BY VENDOR
+export const getProductsByVendor = async (vendorId) => {
+  const res = await axios.get(`${API_BASE}/vendors/${vendorId}/products`);
+  return res.data;
+};
 
-// ✅ Get all products for a vendor
-// vendorId → MongoDB _id of the vendor
-// Returns → Array of products belonging to that vendor
-export const getProducts = (vendorId) =>
-  axios.get(`${API}/vendors/${vendorId}/products`).then((res) => res.data);
+// 🔍 GET SINGLE PRODUCT
+export const getProductById = async (id) => {
+  const res = await axios.get(`${API_BASE}/${id}`);
+  return res.data;
+};
 
-// ✅ Add a new product
-// vendorId → Which vendor this product belongs to
-// product → { name, description, price, category, image(optional) }
-// Returns → Saved product object
-export const addProduct = (vendorId, product) =>
-  axios.post(`${API}/vendors/${vendorId}/products`, product).then((res) => res.data);
+// ➕ ADD PRODUCT
+export const addProduct = async (vendorId, formData) => {
+  const res = await axios.post(
+    `${API_BASE}/vendors/${vendorId}/products`,
+    formData,
+    { headers: { "Content-Type": "multipart/form-data" } }
+  );
+  return res.data;
+};
 
-// ✅ Update an existing product
-// id → Product _id
-// product → Updated product fields
-// Returns → Updated product object
-export const updateProduct = (id, product) =>
-  axios.put(`${API}/products/${id}`, product).then((res) => res.data);
+// ✏️ UPDATE PRODUCT
+export const updateProduct = async (productId, formData) => {
+  const res = await axios.put(`${API_BASE}/${productId}`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+};
 
-// ✅ Delete a product
-// id → Product _id
-// Returns → { message: "✅ Product deleted", product: deletedProduct }
-export const deleteProduct = (id) =>
-  axios.delete(`${API}/products/${id}`).then((res) => res.data);
+// ❌ DELETE PRODUCT
+export const deleteProduct = async (productId) => {
+  const res = await axios.delete(`${API_BASE}/${productId}`);
+  return res.data;
+};
