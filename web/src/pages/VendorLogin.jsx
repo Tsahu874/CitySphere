@@ -1,22 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
 
 export default function VendorLogin() {
   const navigate = useNavigate();
   const { setVendor, setVendorToken } = useAuth();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,51 +17,58 @@ export default function VendorLogin() {
     try {
       const res = await axios.post(
         "http://localhost:5000/auth/vendor/login",
-        formData
+        { email, password }
       );
 
-      // ✅ Context
-      setVendor(res.data.vendor);
-      setVendorToken(res.data.token);
-
-      // ✅ LocalStorage (KEYS MUST MATCH AuthContext)
-      localStorage.setItem("vendor", JSON.stringify(res.data.vendor));
+      // ✅ SAVE TO LOCAL STORAGE
       localStorage.setItem("vendorToken", res.data.token);
+      localStorage.setItem(
+        "vendorData",
+        JSON.stringify(res.data.vendor)
+      );
+
+      // ✅ UPDATE CONTEXT (MOST IMPORTANT FIX)
+      setVendorToken(res.data.token);
+      setVendor(res.data.vendor);
 
       toast.success("Vendor login successful!");
       navigate("/vendor-dashboard");
+
     } catch (err) {
-      toast.error(err.response?.data?.error || "Invalid credentials");
+      toast.error(err.response?.data?.error || "Vendor login failed");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-silver to-secondary">
-      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Vendor Login</h2>
+      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md border border-silver">
+        <h2 className="text-3xl font-bold text-center text-primary mb-6">
+          Vendor Login
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
-            name="email"
             placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border px-4 py-2 rounded"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none"
           />
 
           <input
             type="password"
-            name="password"
             placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full border px-4 py-2 rounded"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none"
           />
 
-          <button className="w-full bg-primary text-white py-2 rounded">
+          <button
+            type="submit"
+            className="w-full bg-primary text-white py-2 rounded-lg font-semibold hover:bg-gold transition-all"
+          >
             Login
           </button>
         </form>

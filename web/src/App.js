@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // 🌐 Shared Components / Pages
 import Header from "./components/Header";
+import Footer from "./components/Footer"; // ✅ ADDED
 import About from "./pages/About";
 import LandingPage from "./pages/LandingPage";
 
@@ -35,12 +36,14 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <Router>
-      <div className="bg-gray-50 min-h-screen">
+      {/* ✅ flex layout so footer stays at bottom */}
+      <div className="bg-gray-50 min-h-screen flex flex-col">
+        
         {/* 🔝 Navbar */}
         <Header />
 
         {/* 📄 Page Content */}
-        <main className="max-w-6xl mx-auto px-6 py-8">
+        <main className="flex-grow max-w-6xl mx-auto px-6 py-8">
           <Routes>
             {/* 🏠 Landing */}
             <Route path="/" element={<LandingPage />} />
@@ -79,6 +82,9 @@ function App() {
             <Route path="/about" element={<About />} />
           </Routes>
         </main>
+
+        {/* ✅ Footer added */}
+        <Footer />
 
         {/* 🔔 Toast */}
         <ToastContainer position="top-right" autoClose={3000} />

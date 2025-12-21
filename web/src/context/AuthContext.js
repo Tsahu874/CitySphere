@@ -1,56 +1,29 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  // 🏪 Vendor
   const [vendor, setVendor] = useState(null);
   const [vendorToken, setVendorToken] = useState(null);
 
-  // 👤 User
-  const [user, setUser] = useState(null);
-  const [userToken, setUserToken] = useState(null);
-
-  const [loading, setLoading] = useState(true);
-
+  // 🔄 Restore login on refresh
   useEffect(() => {
-    // 🔁 Restore vendor session
-    const savedVendor = localStorage.getItem("vendor");
-    const savedVendorToken = localStorage.getItem("vendorToken");
+    const token = localStorage.getItem("vendorToken");
+    const vendorData = localStorage.getItem("vendorData");
 
-    if (savedVendor && savedVendorToken) {
-      setVendor(JSON.parse(savedVendor));
-      setVendorToken(savedVendorToken);
+    if (token && vendorData) {
+      setVendorToken(token);
+      setVendor(JSON.parse(vendorData));
     }
-
-    // 🔁 Restore user session
-    const savedUser = localStorage.getItem("user");
-    const savedUserToken = localStorage.getItem("userToken");
-
-    if (savedUser && savedUserToken) {
-      setUser(JSON.parse(savedUser));
-      setUserToken(savedUserToken);
-    }
-
-    setLoading(false);
   }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        // vendor
         vendor,
         setVendor,
         vendorToken,
-        setVendorToken,
-
-        // user
-        user,
-        setUser,
-        userToken,
-        setUserToken,
-
-        loading,
+        setVendorToken
       }}
     >
       {children}

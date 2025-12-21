@@ -32,7 +32,7 @@ exports.addProduct = async (req, res) => {
   }
 };
 
-// ✅ Get Products by Vendor
+//  Get Products by Vendor
 exports.getProductsByVendor = async (req, res) => {
   try {
     const vendorId = req.params.vendorId;
@@ -48,7 +48,7 @@ exports.getProductsByVendor = async (req, res) => {
   }
 };
 
-// ✅ Update Product
+// Update Product
 exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -76,7 +76,7 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-// ✅ Delete Product
+// Delete Product
 exports.deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
