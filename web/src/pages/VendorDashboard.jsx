@@ -1,5 +1,5 @@
-// 📂 web/src/pages/VendorDashboard.jsx
-// ✅ Vendor Dashboard – stable auth handling + no redirect loop
+// web/src/pages/VendorDashboard.jsx
+// Vendor Dashboard – stable auth handling + no redirect loop
 
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ export default function VendorDashboard() {
   const navigate = useNavigate();
   const { vendor, vendorToken, loading, setVendor, setVendorToken } = useAuth();
 
-  // 🔐 Protect dashboard (NO infinite redirect)
+  //  Protect dashboard (NO infinite redirect)
   useEffect(() => {
     if (loading) return;
 
@@ -20,7 +20,7 @@ export default function VendorDashboard() {
     }
   }, [vendorToken, loading, navigate]);
 
-  // 🚪 Logout handler
+  // Logout handler
   const handleLogout = () => {
     localStorage.removeItem("vendorToken");
     localStorage.removeItem("vendorData");
@@ -32,7 +32,7 @@ export default function VendorDashboard() {
     navigate("/");
   };
 
-  // 🕓 While auth state is loading
+  //  While auth state is loading
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-gradient-to-br from-silver to-secondary">
@@ -43,13 +43,13 @@ export default function VendorDashboard() {
     );
   }
 
-  // 🛑 Extra safety
+  //  Extra safety
   if (!vendor) return null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-silver via-white to-secondary flex flex-col items-center py-12 px-4">
       
-      {/* 🏪 Vendor Info */}
+      {/* Vendor Info */}
       <div className="bg-white/80 backdrop-blur-md shadow-xl rounded-3xl p-10 w-full max-w-4xl border border-silver text-center">
         <h1 className="text-4xl font-bold text-sage">
           Welcome, {vendor.shopName} 👋
@@ -60,10 +60,10 @@ export default function VendorDashboard() {
         </p>
       </div>
 
-      {/* 📦 Dashboard Actions */}
+      {/*  Dashboard Actions */}
       <div className="grid md:grid-cols-3 gap-8 mt-10 max-w-5xl w-full">
 
-        {/* 🛍️ Manage Products */}
+        {/*  Manage Products */}
         <div
           onClick={() => navigate("/vendor-dashboard/list")}
           className="cursor-pointer bg-white/70 backdrop-blur-md border border-silver rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all hover:-translate-y-2"
@@ -77,7 +77,7 @@ export default function VendorDashboard() {
           </p>
         </div>
 
-        {/* 👤 Profile */}
+        {/*  Profile */}
         <div
           onClick={() => toast.info("Profile feature coming soon")}
           className="cursor-pointer bg-white/70 backdrop-blur-md border border-silver rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all hover:-translate-y-2"
@@ -91,7 +91,7 @@ export default function VendorDashboard() {
           </p>
         </div>
 
-        {/* 🚪 Logout */}
+        {/*  Logout */}
         <div
           onClick={handleLogout}
           className="cursor-pointer bg-white/70 backdrop-blur-md border border-silver rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all hover:-translate-y-2"
@@ -106,7 +106,7 @@ export default function VendorDashboard() {
         </div>
       </div>
 
-      {/* 🧾 Footer */}
+      {/* Footer */}
       <footer className="mt-10 text-gray-500 text-sm">
         © 2025 <span className="font-semibold text-primary">CitySphere</span>
       </footer>

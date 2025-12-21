@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { getVendors, deleteVendor } from "../api/vendors";
 import VendorForm from "./VendorForm";
 import ProductList from "./ProductList";
-import { useAuth } from "../context/AuthContext"; // ✅ IMPORTANT
+import { useAuth } from "../context/AuthContext"; 
 
 export default function VendorList() {
-  const { vendor } = useAuth(); // ✅ logged-in vendor
+  const { vendor } = useAuth(); 
 
   const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ export default function VendorList() {
       setLoading(true);
       const data = await getVendors();
 
-      // ✅ ONLY SHOW LOGGED-IN VENDOR
+      // ONLY SHOW LOGGED-IN VENDOR
       const myVendor = vendor
         ? data.filter((v) => v.email === vendor.email)
         : [];
@@ -63,7 +63,7 @@ export default function VendorList() {
     setEditing(null);
   };
 
-  // 🔍 filters (still useful even for single vendor)
+  // filters (still useful even for single vendor)
   const visibleVendors = vendors.filter(
     (v) =>
       (!categoryFilter || v.category?.toLowerCase() === categoryFilter) &&
@@ -77,7 +77,7 @@ export default function VendorList() {
         My Vendor Profile
       </h2>
 
-      {/* ➕ Add Vendor (only if not exists) */}
+      {/* Add Vendor (only if not exists) */}
       {vendors.length === 0 && (
         <button
           onClick={() => {
@@ -176,7 +176,7 @@ export default function VendorList() {
         </div>
       )}
 
-      {/* 📦 Products */}
+      {/*  Products */}
       {showProductsFor && (
         <div className="mt-6">
           <h3 className="text-lg font-bold mb-2">My Products</h3>

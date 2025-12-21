@@ -20,14 +20,14 @@ export default function VendorLogin() {
         { email, password }
       );
 
-      // ✅ SAVE TO LOCAL STORAGE
+      // SAVE TO LOCAL STORAGE
       localStorage.setItem("vendorToken", res.data.token);
       localStorage.setItem(
         "vendorData",
         JSON.stringify(res.data.vendor)
       );
 
-      // ✅ UPDATE CONTEXT (MOST IMPORTANT FIX)
+      //  UPDATE CONTEXT (MOST IMPORTANT FIX)
       setVendorToken(res.data.token);
       setVendor(res.data.vendor);
 

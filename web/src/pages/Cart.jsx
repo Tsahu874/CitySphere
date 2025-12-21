@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 export default function Cart() {
   const cartContext = useCart();
 
-  // 🛑 Safety check (important)
+  // Safety check (important)
   if (!cartContext) {
     return <p className="text-center mt-10">Cart not available</p>;
   }
 
   const { cartItems, removeFromCart } = cartContext;
 
-  // 🧮 Total price (safe reduce)
+  // total price (safe reduce)
   const total = (cartItems || []).reduce(
     (sum, item) => sum + item.price * item.qty,
     0
@@ -67,7 +67,7 @@ export default function Cart() {
             ))}
           </div>
 
-          {/* 💰 Total */}
+          {/*Total */}
           <div className="mt-8 text-right">
             <h3 className="text-xl font-bold">
               Total: ₹{total}

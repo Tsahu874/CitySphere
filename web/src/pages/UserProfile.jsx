@@ -14,13 +14,13 @@ export default function UserProfile() {
     <div className="max-w-5xl mx-auto py-10 px-4">
       <h2 className="text-3xl font-bold mb-6">My Profile</h2>
 
-      {/* 👤 USER INFO */}
+      {/* USER INFO */}
       <div className="bg-white shadow rounded p-6 mb-8">
         <p><strong>Name:</strong> {userData?.fullName}</p>
         <p><strong>Email:</strong> {userData?.email}</p>
       </div>
 
-      {/* 🛒 CART */}
+      {/* CART */}
       <h3 className="text-2xl font-semibold mb-4">My Cart</h3>
 
       {cart.length === 0 ? (

@@ -9,20 +9,20 @@ import { useNavigate } from "react-router-dom";
 export default function VendorSignup() {
   const navigate = useNavigate();
 
-  // 🧩 Form data state
+  // Form data state
   const [formData, setFormData] = useState({
     shopName: "",
     email: "",
     password: "",
   });
 
-  // 🔁 Handle input changes
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // 🚀 Handle form submit
+  // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -38,11 +38,11 @@ export default function VendorSignup() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-silver to-secondary">
-      {/* 📦 Signup Card */}
+      {/* Signup Card */}
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md border border-silver">
         <h2 className="text-3xl font-bold text-center text-primary mb-6">Register as a Vendor</h2>
 
-        {/* 📝 Signup Form */}
+        {/* Signup Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             name="shopName"
@@ -78,7 +78,7 @@ export default function VendorSignup() {
           </button>
         </form>
 
-        {/* 🔁 Redirect to login */}
+        {/*  Redirect to login */}
         <p className="text-center text-sm text-gray-600 mt-4">
           Already a vendor?{" "}
           <span

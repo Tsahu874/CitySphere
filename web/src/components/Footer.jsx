@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="bg-[#2f4f6f] text-gray-200 mt-16">
       <div className="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
 
-        {/* 🌆 Brand */}
+        {/* Brand */}
         <div>
           <h2 className="text-2xl font-bold text-white mb-3">
             CitySphere
@@ -18,7 +18,7 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* 🔗 Quick Links */}
+        {/* Quick Links */}
         <div>
           <h3 className="text-lg font-semibold text-white mb-3">
             Quick Links
@@ -31,7 +31,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* 👤 Users */}
+        {/* Users */}
         <div>
           <h3 className="text-lg font-semibold text-white mb-3">
             For Users
@@ -44,7 +44,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* 📬 Contact & Socials */}
+        {/* Contact & Socials */}
         <div>
           <h3 className="text-lg font-semibold text-white mb-3">
             Contact
@@ -67,7 +67,7 @@ export default function Footer() {
 
       </div>
 
-      {/* 🔒 Bottom */}
+      {/* Bottom */}
       <div className="border-t border-gray-500 text-center py-4 text-sm text-gray-300">
         © {new Date().getFullYear()} CitySphere. All rights reserved.
       </div>

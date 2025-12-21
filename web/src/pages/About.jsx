@@ -1,5 +1,5 @@
-// ✅ web/src/pages/About.jsx
-// ℹ️ Static About page explaining the purpose and mission of CitySphere
+//  web/src/pages/About.jsx
+//  Static About page explaining the purpose and mission of CitySphere
 
 import React from "react";
 

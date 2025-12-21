@@ -2,16 +2,16 @@ const express = require("express");
 const router = express.Router();
 const Vendor = require("../models/Vendor");
 
-// ============================
-// ✅ TEST ROUTE
-// ============================
+
+// TEST ROUTE
+
 router.get("/test", (req, res) => {
   res.send("vendorRoutes working");
 });
 
-// ============================
-// 📦 GET ALL VENDORS
-// ============================
+
+// GET ALL VENDORS
+
 router.get("/", async (req, res) => {
   try {
     const vendors = await Vendor.find();
@@ -22,9 +22,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ============================
-// ➕ ADD VENDOR
-// ============================
+
+// ADD VENDOR
+
 router.post("/", async (req, res) => {
   try {
     const vendor = new Vendor(req.body);

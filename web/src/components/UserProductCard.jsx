@@ -19,7 +19,7 @@ export default function UserProductCard({ product }) {
 
   return (
     <div className="relative bg-white border rounded-xl shadow hover:shadow-lg transition overflow-hidden group">
-      {/* 🛒 ADD TO CART ICON */}
+      {/* ADD TO CART ICON */}
       <button
         onClick={handleAddToCart}
         disabled={alreadyInCart}
@@ -35,7 +35,7 @@ export default function UserProductCard({ product }) {
         🛒
       </button>
 
-      {/* 🖼 IMAGE */}
+      {/*IMAGE */}
       <Link to={`/product/${product._id}`}>
         <div className="h-48 bg-gray-100">
           {product.image ? (
@@ -52,7 +52,7 @@ export default function UserProductCard({ product }) {
         </div>
       </Link>
 
-      {/* 📦 INFO */}
+      {/* INFO */}
       <div className="p-4">
         <h3 className="font-semibold text-lg">{product.name}</h3>
 
@@ -61,7 +61,7 @@ export default function UserProductCard({ product }) {
         <p className="text-green-600 font-bold mt-2">₹{product.price}</p>
       </div>
 
-      {/* ✅ ADD FEEDBACK */}
+      {/* ADD FEEDBACK */}
       {added && (
         <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-sm font-semibold">
           Added to Cart ✅

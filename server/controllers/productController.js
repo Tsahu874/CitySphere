@@ -1,7 +1,7 @@
 const Product = require("../models/Product");
 const Vendor = require("../models/Vendor");
 
-// ✅ Add Product (with image)
+// Add Product (with image)
 exports.addProduct = async (req, res) => {
   try {
     const { name, description, price, category } = req.body;
@@ -11,7 +11,7 @@ exports.addProduct = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // image path (multer se aayega)
+    // image path (multer)
     const image = req.file ? `/uploads/${req.file.filename}` : null;
 
     const product = new Product({

@@ -6,19 +6,19 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    // 🔥 FORCE FULL WIDTH EVEN INSIDE max-w container
+    //  FORCE FULL WIDTH EVEN INSIDE max-w container
     <div className="relative w-screen min-h-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden">
       
-      {/* 🌆 Background Image */}
+      {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-60"
         style={{ backgroundImage: `url(${cityBg})` }}
       />
 
-      {/* 🌟 Overlay (optional luxury effect) */}
+      {/* Overlay (optional luxury effect) */}
       <div className="absolute inset-0 bg-gradient-to-br from-black/30 via-transparent to-black/20"></div>
 
-      {/* 🎯 Foreground Content */}
+      {/* Foreground Content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6">
         
         <h1 className="text-5xl md:text-6xl font-extrabold text-primary mb-4 drop-shadow-lg">

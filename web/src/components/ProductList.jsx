@@ -89,7 +89,7 @@ export default function ProductList({ vendorId, onClose }) {
               key={p._id}
               className="bg-white border rounded shadow-sm p-3"
             >
-              {/* 🖼 IMAGE */}
+              {/* IMAGE */}
               {p.image ? (
                 <img
                   src={`${IMAGE_BASE}${p.image}`}

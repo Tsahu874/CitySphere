@@ -1,4 +1,4 @@
-// ✅ web/src/pages/UserHome.jsx
+// web/src/pages/UserHome.jsx
 // User-facing homepage: displays vendors in elegant, clickable cards
 
 import React, { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ export default function UserHome() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // 🔄 Fetch vendor list on mount
+  // Fetch vendor list on mount
   useEffect(() => {
     async function fetchData() {
       try {
@@ -29,12 +29,12 @@ export default function UserHome() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-silver to-white py-10 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* 🧭 Page Heading */}
+        {/* Page Heading */}
         <h2 className="text-4xl font-bold text-sage mb-10 text-center">
           Explore Local Vendors
         </h2>
 
-        {/* 📦 Content Area */}
+        {/* Content Area */}
         {loading ? (
           <p className="text-center text-gray-500 text-lg">Loading vendors...</p>
         ) : error ? (

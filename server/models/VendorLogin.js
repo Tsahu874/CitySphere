@@ -1,7 +1,7 @@
 // server/models/VendorLogin.js
 const mongoose = require("mongoose");
 
-// 🏪 Schema for vendors (login/signup)
+// Schema for vendors (login/signup)
 const VendorLoginSchema = new mongoose.Schema(
   {
     shopName: { type: String, required: true },           // business/shop name

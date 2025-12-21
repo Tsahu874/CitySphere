@@ -6,7 +6,7 @@ export function AuthProvider({ children }) {
   const [vendor, setVendor] = useState(null);
   const [vendorToken, setVendorToken] = useState(null);
 
-  // 🔄 Restore login on refresh
+  // Restore login on refresh
   useEffect(() => {
     const token = localStorage.getItem("vendorToken");
     const vendorData = localStorage.getItem("vendorData");

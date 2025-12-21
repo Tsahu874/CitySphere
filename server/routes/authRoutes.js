@@ -1,7 +1,6 @@
-// 📂 File: server/routes/authRoutes.js
-// 📘 Description: Secure Authentication Routes for User & Vendor
+// File: server/routes/authRoutes.js
+// Description: Secure Authentication Routes for User & Vendor
 // Uses bcrypt for password hashing and JWT for authentication tokens
-// ==========================================
 
 const express = require("express");
 const bcrypt = require("bcryptjs");
@@ -16,15 +15,15 @@ const VendorLogin = require("../models/VendorLogin");
 const JWT_SECRET = "citysphere_secret_key";
 
 
-// ====================================================================
-// 👤 USER AUTH ROUTES
-// ====================================================================
 
-// 🧍 USER SIGNUP
-// -------------------------------------------------------
+// USER AUTH ROUTES
+
+
+// USER SIGNUP
+
 // → Registers new user securely (hashed password)
 // → Returns success message with basic user info
-// -------------------------------------------------------
+
 router.post("/user/signup", async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
@@ -57,7 +56,7 @@ router.post("/user/signup", async (req, res) => {
 });
 
 
-// 🧍 USER LOGIN
+// USER LOGIN
 // -------------------------------------------------------
 // → Compares hashed password using bcrypt
 // → Generates JWT token if credentials are valid
@@ -92,15 +91,15 @@ router.post("/user/login", async (req, res) => {
 });
 
 
-// ====================================================================
-// 🏪 VENDOR AUTH ROUTES
-// ====================================================================
 
-// 🏪 VENDOR SIGNUP
+// VENDOR AUTH ROUTES
+// ====================
+
+// VENDOR SIGNUP
 // -------------------------------------------------------
 // → Registers vendor with hashed password
 // → Checks for duplicate email before saving
-// -------------------------------------------------------
+
 router.post("/vendor/signup", async (req, res) => {
   try {
     const { shopName, email, password } = req.body;
@@ -131,7 +130,7 @@ router.post("/vendor/signup", async (req, res) => {
 });
 
 
-// 🏪 VENDOR LOGIN
+// VENDOR LOGIN
 // -------------------------------------------------------
 // → Validates login, compares password using bcrypt
 // → Returns JWT token for authentication
@@ -167,6 +166,6 @@ router.post("/vendor/login", async (req, res) => {
 
 
 
-// 📤 EXPORT ROUTER
+// EXPORT ROUTER
 
 module.exports = router;

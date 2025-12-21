@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "citysphere_secret_key"; // later move to .env
 
-// 🛡️ Middleware to verify JWT for vendors
+// Middleware to verify JWT for vendors
 const verifyVendorToken = (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(" ")[1]; // "Bearer <token>"

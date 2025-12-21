@@ -11,7 +11,7 @@ export default function ProductCard({
   return (
     <div className="bg-white shadow-md rounded-xl border p-4 flex flex-col">
       
-      {/* 🖼️ Product Image */}
+      {/* Product Image */}
       <div className="h-40 w-full bg-gray-100 rounded mb-3 flex items-center justify-center overflow-hidden">
         {product.image ? (
           <img
@@ -24,7 +24,7 @@ export default function ProductCard({
         )}
       </div>
 
-      {/* 📦 Product Info */}
+      {/* Product Info */}
       <h3 className="text-lg font-semibold text-gray-800">
         {product.name}
       </h3>
@@ -37,7 +37,7 @@ export default function ProductCard({
         ₹ {product.price}
       </div>
 
-      {/* 🔘 Vendor Actions */}
+      {/* Vendor Actions */}
       {isVendor && (
         <div className="flex gap-3 mt-4 text-sm">
           <button

@@ -42,7 +42,7 @@ export default function VendorDetail() {
     fetchData();
   }, [id]);
 
-  // ================= UI STATES =================
+  //  UI STATES 
 
   if (loading) {
     return (
@@ -70,7 +70,7 @@ export default function VendorDetail() {
     );
   }
 
-  // ================= MAIN UI =================
+  //  MAIN UI 
 
   return (
     <div className="min-h-screen py-10 px-4">

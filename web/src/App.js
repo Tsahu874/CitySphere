@@ -29,35 +29,35 @@ import UserLogin from "./pages/UserLogin";
 import VendorSignup from "./pages/VendorSignup";
 import VendorLogin from "./pages/VendorLogin";
 
-// 🔔 Toast Notifications
+//  Toast Notifications
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <Router>
-      {/* ✅ flex layout so footer stays at bottom */}
+      {/*  flex layout so footer stays at bottom */}
       <div className="bg-gray-50 min-h-screen flex flex-col">
         
-        {/* 🔝 Navbar */}
+        {/*  Navbar */}
         <Header />
 
-        {/* 📄 Page Content */}
+        {/* Page Content */}
         <main className="flex-grow max-w-6xl mx-auto px-6 py-8">
           <Routes>
-            {/* 🏠 Landing */}
+            {/*  Landing */}
             <Route path="/" element={<LandingPage />} />
 
-            {/* 👤 User */}
+            {/*  User */}
             <Route path="/home" element={<UserHome />} />
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/cart" element={<Cart />} />
 
-            {/* 🏪 Vendor / Products */}
+            {/* Vendor / Products */}
             <Route path="/vendor/:id" element={<VendorDetail />} />
             <Route path="/product/:id" element={<ProductDetail />} />
 
-            {/* 🧑‍💼 Vendor Dashboard */}
+            {/*  Vendor Dashboard */}
             <Route
               path="/vendor-dashboard"
               element={
@@ -72,21 +72,21 @@ function App() {
               element={<ProductList />}
             />
 
-            {/* 🔐 Auth */}
+            {/*  Auth */}
             <Route path="/user/signup" element={<UserSignup />} />
             <Route path="/user/login" element={<UserLogin />} />
             <Route path="/vendor/signup" element={<VendorSignup />} />
             <Route path="/vendor/login" element={<VendorLogin />} />
 
-            {/* ℹ️ Info */}
+            {/*  Info */}
             <Route path="/about" element={<About />} />
           </Routes>
         </main>
 
-        {/* ✅ Footer added */}
+        {/*  Footer added */}
         <Footer />
 
-        {/* 🔔 Toast */}
+        {/* Toast */}
         <ToastContainer position="top-right" autoClose={3000} />
       </div>
     </Router>

@@ -3,7 +3,7 @@ const router = express.Router();
 const Product = require("../models/Product");
 const upload = require("../middleware/upload");
 
-// ================= ADD PRODUCT =================
+//  ADD PRODUCT 
 router.post(
   "/vendors/:vendorId/products",
   upload.single("image"),
@@ -27,7 +27,7 @@ router.post(
   }
 );
 
-// ================= GET PRODUCTS BY VENDOR =================
+//GET PRODUCTS BY VENDOR
 router.get("/vendors/:vendorId/products", async (req, res) => {
   try {
     const products = await Product.find({
@@ -39,7 +39,7 @@ router.get("/vendors/:vendorId/products", async (req, res) => {
   }
 });
 
-// ================= 🔥 GET SINGLE PRODUCT (THIS WAS MISSING) =================
+// GET SINGLE PRODUCT 
 router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -54,7 +54,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// ================= UPDATE PRODUCT =================
+//  UPDATE PRODUCT 
 router.put("/:id", upload.single("image"), async (req, res) => {
   try {
     const updateData = {
@@ -80,7 +80,7 @@ router.put("/:id", upload.single("image"), async (req, res) => {
   }
 });
 
-// ================= DELETE PRODUCT =================
+// DELETE PRODUCT 
 router.delete("/:id", async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { addProduct, updateProduct } from "../api/products";
 
 export default function ProductForm({ vendorId, product, onSaved, onCancel }) {
-  // 🔹 Text fields
+  // Text fields
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -10,12 +10,12 @@ export default function ProductForm({ vendorId, product, onSaved, onCancel }) {
     category: "",
   });
 
-  // 🔹 Image file
+  // Image file
   const [image, setImage] = useState(null);
 
   const [saving, setSaving] = useState(false);
 
-  // 🔁 Edit mode → load old data
+  // Edit mode → load old data
   useEffect(() => {
     if (product) {
       setFormData({
@@ -35,17 +35,17 @@ export default function ProductForm({ vendorId, product, onSaved, onCancel }) {
     setImage(null);
   }, [product]);
 
-  // 🔹 Text input change
+  // Text input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // 🔹 Submit
+  //  Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 🔴 Image required for NEW product
+    //  Image required for NEW product
     if (!product && !image) {
       alert("❌ Product image is required");
       return;
@@ -54,7 +54,7 @@ export default function ProductForm({ vendorId, product, onSaved, onCancel }) {
     try {
       setSaving(true);
 
-      // 🔥 IMPORTANT: FormData
+      // IMPORTANT: FormData
       const data = new FormData();
       data.append("name", formData.name);
       data.append("description", formData.description);
@@ -125,7 +125,7 @@ export default function ProductForm({ vendorId, product, onSaved, onCancel }) {
         className="border px-3 py-2 rounded w-full"
       />
 
-      {/* 🖼 IMAGE FILE */}
+      {/* IMAGE FILE */}
       <input
         type="file"
         accept="image/*"

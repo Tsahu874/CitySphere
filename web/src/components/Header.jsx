@@ -5,16 +5,16 @@ import { useCart } from "../context/CartContext";
 export default function Header() {
   const navigate = useNavigate();
 
-  // 🔐 Auth data
+  //  Auth data
   const vendorToken = localStorage.getItem("vendorToken");
   const userToken = localStorage.getItem("userToken");
   const vendorData = localStorage.getItem("vendorData");
   const userData = localStorage.getItem("userData");
 
-  // 🛒 Cart
+  // Cart
   const { cartItems } = useCart();
 
-  // 🔓 Logout
+  // Logout
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
@@ -24,15 +24,15 @@ export default function Header() {
     <header className="bg-primary shadow-md sticky top-0 z-50">
       <div className="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
 
-        {/* 🌆 Brand */}
+        {/* Brand */}
         <Link to="/" className="text-2xl font-extrabold text-silver">
           CitySphere
         </Link>
 
-        {/* 🧭 Desktop Nav */}
+        {/* Desktop Nav */}
         <nav className="flex items-center gap-6 text-silver font-medium">
 
-          {/* 👤 Not logged in */}
+          {/* Not logged in */}
           {!vendorToken && !userToken && (
             <>
               <Link to="/about">About</Link>
@@ -43,7 +43,7 @@ export default function Header() {
             </>
           )}
 
-          {/* 🧑‍💼 Vendor */}
+          {/*  Vendor */}
           {vendorToken && (
             <>
               <span className="text-gold">
@@ -56,7 +56,7 @@ export default function Header() {
             </>
           )}
 
-          {/* 👤 User */}
+          {/* User */}
           {userToken && !vendorToken && (
             <>
               <span className="text-gold">
@@ -65,7 +65,7 @@ export default function Header() {
 
               <Link to="/home">Home</Link>
 
-              {/* 🛒 CART ICON */}
+              {/*  CART ICON */}
               <Link to="/cart" className="relative">
                 <span className="text-2xl">🛒</span>
 

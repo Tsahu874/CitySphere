@@ -2,18 +2,17 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// ==================================================
-// 📁 Ensure uploads folder exists
-// ==================================================
+//  Ensure uploads folder exists
+
 const uploadDir = path.join(__dirname, "..", "uploads");
 
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// ==================================================
-// 🧠 Multer Storage Config
-// ==================================================
+
+//  Multer Storage Config
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadDir);
@@ -25,9 +24,9 @@ const storage = multer.diskStorage({
   },
 });
 
-// ==================================================
-// 🖼️ File Filter (images only)
-// ==================================================
+
+//  File Filter (images only)
+
 const fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image/")) {
     cb(null, true);

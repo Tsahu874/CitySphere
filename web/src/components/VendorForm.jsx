@@ -11,7 +11,7 @@ export default function VendorForm({ vendor, onSaved, onCancel }) {
     state: "",
     pincode: "",
     phone: "",
-    email: "", // ✅ new field
+    email: "", 
   });
   const [saving, setSaving] = useState(false);
 
